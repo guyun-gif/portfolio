@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yun Gu — Data Analytics Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #120E0B;
+      --surface:     #1C1410;
+      --surface2:    #241A15;
+      --green:       #BA9A7E;
+      --green-lt:    #D4B49A;
+      --green-dim:   rgba(186,154,126,.12);
+      --green-border:rgba(186,154,126,.30);
+      --white:       #F5EDE8;
+      --gray:        #A8948A;
+      --border:      rgba(245,237,232,.08);
+      --border2:     rgba(245,237,232,.14);
+      --radius:      12px;
+      --shadow:      0 4px 30px rgba(0,0,0,.45);
+      --transition:  .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body  { font-family: 'Inter', sans-serif; color: var(--white); background: var(--bg); overflow-x: hidden; }
+
+    /* ── Utility ── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; }
+    .section    { padding: 7rem 0; }
+    .section-alt { background: var(--surface); }
+
+    .section-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace;
+      display: inline-block;
+    }
+    .section-label::before { content: '// '; opacity: .55; }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800;
+      line-height: 1.12; color: var(--white); margin-bottom: 1.25rem;
+    }
+    .section-lead {
+      font-size: 1.05rem; color: var(--gray); max-width: 600px; line-height: 1.8;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(18,14,11,.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow var(--transition);
+    }
+    nav.scrolled { box-shadow: 0 1px 0 var(--green-border), 0 4px 20px rgba(0,0,0,.4); }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .95rem 2.5rem; max-width: 1280px; margin: 0 auto;
+    }
+    .nav-logo {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 38px; height: 38px;
+      background: var(--green-dim); border: 1.5px solid var(--green-border);
+      border-radius: 8px; font-weight: 700; font-size: .82rem;
+      color: var(--green); letter-spacing: .05em;
+      text-decoration: none; font-family: 'JetBrains Mono', monospace;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: .875rem; font-weight: 500; color: var(--gray);
+      text-decoration: none; transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta {
+      background: var(--green) !important; color: #120E0B !important;
+      padding: .45rem 1.25rem; border-radius: 999px; font-weight: 700 !important;
+      transition: opacity var(--transition) !important;
+    }
+    .nav-cta:hover { opacity: .82; color: #120E0B !important; }
+
+    /* ── Hero ── */
+    .hero {
+      background: #BA9A7E;
+      display: flex; align-items: flex-end;
+      position: relative; overflow: hidden;
+      padding-top: 120px; padding-bottom: 0;
+    }
+    .hero::after, .hero::before { display: none; }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+      position: relative; z-index: 1; width: 100%;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding-bottom: 3rem;
+    }
+
+    /* Hero — dark text on warm beige background */
+    .hero h1 { color: #1A0F0A !important; }
+    .hero h1 em { color: #5C3D2A !important; font-style: italic; }
+    .hero .hero-desc { color: #4A3328 !important; }
+    .hero .hero-eyebrow { background: rgba(90,55,35,.12) !important; border-color: rgba(90,55,35,.3) !important; color: #5C3D2A !important; }
+    .hero .hero-eyebrow .pulse-dot { background: #5C3D2A !important; }
+    .hero .btn-primary { background: #1A0F0A !important; color: #BA9A7E !important; }
+    .hero .btn-primary:hover { background: #2A1A10 !important; }
+    .hero .btn-outline { border-color: rgba(26,15,10,.4) !important; color: #1A0F0A !important; }
+    .hero .btn-outline:hover { border-color: #1A0F0A !important; }
+
+    /* Hero left */
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .55rem;
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      color: var(--green); font-size: .75rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .42rem 1rem; border-radius: 999px; margin-bottom: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hero-eyebrow .pulse-dot {
+      width: 7px; height: 7px; background: var(--green);
+      border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0;
+    }
+    .hero h1 {
+      font-size: clamp(2.8rem, 5.5vw, 4.5rem); font-weight: 800;
+      color: var(--white); line-height: 1.05; margin-bottom: 1.25rem;
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--green);
+      font-family: 'DM Serif Display', serif;
+    }
+    .hero-desc {
+      font-size: 1.05rem; color: var(--gray);
+      line-height: 1.75; max-width: 480px; margin-bottom: 2rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--green); color: #120E0B;
+      font-weight: 700; font-size: .9rem;
+      padding: .9rem 2rem; border-radius: 999px;
+      text-decoration: none; transition: var(--transition);
+    }
+    .btn-primary:hover {
+      background: var(--green-lt); transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(186,154,126,.3);
+    }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: .5rem;
+      border: 1.5px solid var(--border2); color: var(--white);
+      font-weight: 600; font-size: .9rem;
+      padding: .9rem 2rem; border-radius: 999px;
+      text-decoration: none; transition: var(--transition);
+    }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+    /* Hero right: photo cutout + stats */
+    .hero-right { display: flex; flex-direction: column; align-items: center; align-self: flex-end; line-height: 0; }
+
+    .hero-cutout {
+      width: 100%;
+      display: flex; justify-content: center; align-items: flex-end;
+      line-height: 0;
+    }
+    .hero-cutout img {
+      height: 540px; width: auto; max-width: 100%;
+      object-fit: contain; display: block;
+    }
+
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: .85rem; width: 100%;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1rem;
+      text-align: center; transition: var(--transition);
+    }
+    .stat-card:hover { border-color: var(--green-border); transform: translateY(-3px); }
+    .stat-num {
+      font-size: 1.9rem; font-weight: 800; color: var(--green);
+      line-height: 1; margin-bottom: .3rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-label { font-size: .7rem; color: var(--gray); font-weight: 500; line-height: 1.45; }
+
+    /* ── About ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: start; }
+    .about-info-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem;
+      position: sticky; top: 100px;
+    }
+    .about-info-row {
+      display: flex; flex-direction: column; gap: .2rem;
+      padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);
+    }
+    .about-info-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .about-info-label { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--green); font-family: 'JetBrains Mono', monospace; }
+    .about-info-value { font-size: .95rem; font-weight: 600; color: var(--white); }
+
+    .about-content p { font-size: 1rem; line-height: 1.85; color: var(--gray); margin-bottom: 1.1rem; }
+    .about-content p strong { color: var(--green); font-weight: 600; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.75rem; }
+    .tag {
+      display: inline-flex; align-items: center;
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      color: var(--green-lt); font-size: .78rem; font-weight: 600;
+      padding: .35rem .9rem; border-radius: 999px;
+    }
+
+    /* ── Skills ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 3rem; }
+    .skill-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem 1.5rem;
+      transition: var(--transition); position: relative; overflow: hidden;
+    }
+    .skill-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--green); transform: scaleX(0); transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .skill-card:hover { border-color: var(--green-border); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(186,154,126,.06); }
+    .skill-card:hover::after { transform: scaleX(1); }
+    .skill-icon {
+      width: 46px; height: 46px; background: var(--green-dim);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; font-size: 1.3rem;
+    }
+    .skill-card h3 { font-size: .95rem; font-weight: 700; color: var(--white); margin-bottom: .5rem; }
+    .skill-card p  { font-size: .83rem; color: var(--gray); line-height: 1.65; }
+
+    /* Tech stack */
+    .tech-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 3rem; align-items: center; }
+    .tech-pill {
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      color: var(--green-lt); font-size: .77rem; font-weight: 600;
+      padding: .38rem .95rem; border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tech-pill.light { background: var(--surface); border-color: var(--border); color: var(--gray); }
+
+    /* ── Experience ── */
+    .exp-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 0; }
+    .exp-item {
+      display: grid; grid-template-columns: 180px 1fr;
+      gap: 3rem; padding: 2.25rem 0;
+      border-bottom: 1px solid var(--border); position: relative;
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-period { font-size: .77rem; color: var(--gray); font-weight: 500; padding-top: .1rem; font-family: 'JetBrains Mono', monospace; }
+    .exp-period-dur { margin-top: .3rem; color: var(--green); font-weight: 600; font-size: .77rem; font-family: 'JetBrains Mono', monospace; }
+    .exp-dot {
+      width: 10px; height: 10px; background: var(--green); border-radius: 50%;
+      position: absolute; left: 164px; top: 2.6rem;
+      box-shadow: 0 0 0 4px rgba(186,154,126,.15);
+    }
+    .exp-company { font-size: 1.15rem; font-weight: 800; color: var(--white); margin-bottom: .2rem; }
+    .exp-role    { font-size: .88rem; font-weight: 600; color: var(--green); margin-bottom: .65rem; }
+    .exp-desc    { font-size: .88rem; color: var(--gray); line-height: 1.72; }
+
+    /* ── Northern Stars ── */
+    .stars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .star-card {
+      padding: 2.25rem; border-radius: var(--radius);
+      border: 1px solid var(--border); background: var(--surface);
+      transition: var(--transition);
+    }
+    .star-card:hover { border-color: var(--green-border); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(186,154,126,.07); }
+    .star-num {
+      font-size: 2.75rem; font-weight: 800; color: rgba(186,154,126,.14);
+      margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .star-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: .7rem; }
+    .star-card p  { font-size: .88rem; color: var(--gray); line-height: 1.78; }
+
+    /* ── Projects ── */
+    .projects-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 3rem; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; transition: var(--transition);
+    }
+    .project-card:hover { border-color: var(--green-border); box-shadow: 0 12px 40px rgba(0,0,0,.35); }
+    .project-header {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 2rem; align-items: flex-end;
+      padding: 2.25rem 2.5rem 1.75rem; cursor: pointer;
+    }
+    .project-tag {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .7rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: .75rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .project-title    { font-size: 1.4rem; font-weight: 800; color: var(--white); margin-bottom: .35rem; }
+    .project-subtitle { font-size: .88rem; color: var(--gray); }
+    .project-metrics  { display: flex; gap: 1.75rem; flex-shrink: 0; }
+    .metric           { text-align: center; }
+    .metric-num   {
+      font-size: 1.8rem; font-weight: 800; color: var(--green);
+      line-height: 1; font-family: 'JetBrains Mono', monospace;
+    }
+    .metric-label { font-size: .7rem; color: var(--gray); font-weight: 500; margin-top: .25rem; max-width: 90px; }
+
+    .project-tools { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0 2.5rem 1.75rem; }
+    .tool-badge {
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--gray); font-size: .73rem; font-weight: 600;
+      padding: .28rem .75rem; border-radius: 999px;
+    }
+
+    .project-body { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: none; }
+    .project-body.open { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+
+    /* Project image strip */
+    .project-img-strip {
+      grid-column: 1 / -1; border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border); margin-bottom: .5rem;
+    }
+    .project-img-strip img { width: 100%; display: block; }
+    .project-img-placeholder {
+      grid-column: 1 / -1; width: 100%; height: 200px;
+      background: var(--bg); border-radius: 10px;
+      border: 1.5px dashed var(--border2);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: .5rem; margin-bottom: .5rem;
+      color: var(--gray); font-size: .85rem; text-align: center;
+    }
+    .project-img-placeholder span { font-size: 1.75rem; }
+
+    .pb-block h4 {
+      font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+      color: var(--green); margin-bottom: .85rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .pb-block p { font-size: .88rem; color: var(--gray); line-height: 1.75; margin-bottom: .75rem; }
+
+    .challenge-list { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .challenge-list li {
+      display: flex; gap: .75rem;
+      font-size: .86rem; color: var(--gray); line-height: 1.55;
+      padding: .75rem 1rem; background: var(--bg);
+      border-radius: 8px; border: 1px solid var(--border);
+    }
+    .challenge-list li .icon { flex-shrink: 0; }
+
+    .outcome-list { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
+    .outcome-list li {
+      display: flex; gap: .65rem; font-size: .86rem;
+      color: var(--gray); align-items: flex-start;
+    }
+    .outcome-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    .highlight-box {
+      margin-top: 1.25rem; padding: .9rem 1.1rem;
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      border-radius: 10px;
+    }
+    .highlight-box p { font-size: .85rem; color: var(--white); font-weight: 600; margin: 0; }
+    .highlight-box .quote { font-style: italic; font-size: .9rem; }
+    .highlight-box .attr  { font-size: .76rem; color: var(--gray); margin-top: .3rem; margin-bottom: 0; font-weight: 400; }
+
+    /* ── Challenge → Solution grid (Project 1) ── */
+    .cs-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .cs-col { display: flex; flex-direction: column; gap: 0; }
+    .problem-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem; flex-shrink: 0;
+    }
+    .problem-card .prob-icon { font-size: 1.25rem; margin-bottom: .45rem; }
+    .problem-card h5 { font-size: .88rem; font-weight: 700; color: var(--white); margin-bottom: .35rem; }
+    .problem-card p  { font-size: .81rem; color: var(--gray); line-height: 1.6; }
+    .cs-arrow {
+      text-align: center; color: var(--green); font-size: 1.2rem;
+      padding: .5rem 0; opacity: .65; line-height: 1;
+    }
+    .solution-card {
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      border-radius: var(--radius); padding: 1.2rem; flex: 1;
+    }
+    .solution-title {
+      font-size: .75rem; font-weight: 700; color: var(--green);
+      margin-bottom: .85rem; line-height: 1.45;
+      font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .05em;
+    }
+    .solution-items { list-style: none; display: flex; flex-direction: column; gap: .45rem; }
+    .solution-items li {
+      font-size: .81rem; color: var(--gray); line-height: 1.55;
+      padding-left: 1rem; position: relative;
+    }
+    .solution-items li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-size: .75rem; top: .05rem; }
+    .result-badge {
+      display: inline-block; margin-top: .85rem;
+      padding: .4rem .85rem; background: rgba(186,154,126,.2);
+      border-radius: 999px; font-size: .73rem; font-weight: 700;
+      color: var(--green); font-family: 'JetBrains Mono', monospace;
+    }
+
+    .toggle-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--green); color: #120E0B;
+      font-size: .82rem; font-weight: 700;
+      padding: .65rem 1.35rem; border-radius: 999px;
+      border: none; cursor: pointer;
+      transition: var(--transition); align-self: flex-end; flex-shrink: 0;
+      box-shadow: 0 0 0 0 rgba(186,154,126,.4);
+    }
+    .toggle-btn:hover {
+      background: var(--green-lt); transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(186,154,126,.3);
+    }
+    .toggle-btn svg { transition: transform var(--transition); }
+    .toggle-btn.open { background: var(--surface2); color: var(--green); border: 1px solid var(--green-border); }
+    .toggle-btn.open svg { transform: rotate(180deg); }
+
+    /* ── Old vs New (Project 2) ── */
+    .crm-transform {
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      gap: 1.5rem; align-items: stretch;
+    }
+    .crm-panel {
+      border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; gap: .85rem;
+    }
+    .crm-panel.old { background: var(--bg); border: 1px solid var(--border); }
+    .crm-panel.new { background: var(--green-dim); border: 1px solid var(--green-border); }
+    .crm-panel-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace; margin-bottom: .25rem;
+    }
+    .crm-panel.old .crm-panel-label { color: var(--gray); }
+    .crm-panel.new .crm-panel-label { color: var(--green); }
+    .crm-panel-desc { font-size: .8rem; color: var(--gray); line-height: 1.55; font-style: italic; }
+    .kpi-table { display: flex; flex-direction: column; gap: .4rem; margin-top: .25rem; }
+    .kpi-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .5rem .75rem; background: var(--surface); border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .kpi-name  { font-size: .78rem; color: var(--gray); }
+    .kpi-value { font-size: .78rem; color: var(--surface2); background: var(--border2); padding: .15rem .5rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; }
+    .kpi-sowhat { font-size: .75rem; color: var(--gray); opacity: .6; font-style: italic; margin-top: .5rem; }
+    .story-card {
+      background: rgba(18,14,11,.4); border-radius: 8px;
+      padding: .75rem 1rem; border-left: 2px solid var(--green);
+    }
+    .story-card p { font-size: .81rem; color: var(--white); line-height: 1.6; }
+    .crm-arrow {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: var(--green); opacity: .7; flex-shrink: 0;
+    }
+    .crm-bottom { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; margin-top: 1.25rem; }
+    .crm-bottom-quote { display: flex; flex-direction: column; gap: .75rem; }
+    .workshop-thumb {
+      width: 220px; border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border); flex-shrink: 0;
+    }
+    .workshop-thumb img { width: 100%; display: block; }
+    .workshop-caption { font-size: .68rem; color: var(--gray); text-align: center; padding: .4rem; background: var(--surface2); }
+
+    /* ── AI Project (Project 3) ── */
+    .ai-section-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--green); font-family: 'JetBrains Mono', monospace; margin-bottom: .85rem;
+    }
+    .ai-section-label::before { content: '// '; opacity: .55; }
+
+    /* Gap section */
+    .seg-gap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem; align-items: center; }
+    .seg-panel { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.35rem; }
+    .seg-panel-title { font-size: .72rem; font-weight: 700; color: var(--gray); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
+    .seg-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: .85rem; }
+    .seg-tag { padding: .3rem .75rem; border-radius: 999px; font-size: .75rem; font-weight: 600; border: 1px solid var(--border2); color: var(--gray); }
+    .seg-note { font-size: .72rem; color: var(--gray); font-style: italic; opacity: .7; }
+    .data-row { display: flex; align-items: center; gap: .6rem; padding: .45rem 0; border-bottom: 1px solid var(--border); }
+    .data-row:last-child { border-bottom: none; }
+    .data-check { font-size: .85rem; flex-shrink: 0; width: 18px; text-align: center; }
+    .data-name { font-size: .8rem; color: var(--gray); }
+    .data-name.has { color: var(--white); }
+    .seg-gap-center {
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      padding: 1rem; background: rgba(255,80,80,.06); border: 1px dashed rgba(255,80,80,.25);
+      border-radius: var(--radius); text-align: center;
+    }
+    .seg-gap-icon { font-size: 1.5rem; }
+    .seg-gap-text { font-size: .75rem; color: #f87171; font-weight: 600; line-height: 1.45; }
+
+    /* 4-step process */
+    .process-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: .75rem; align-items: stretch; }
+    .process-step {
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center;
+    }
+    .process-num { font-size: .68rem; font-weight: 700; color: var(--green); font-family: 'JetBrains Mono', monospace; margin-bottom: .5rem; }
+    .process-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+    .process-step h5 { font-size: .82rem; font-weight: 700; color: var(--white); margin-bottom: .4rem; }
+    .process-step p  { font-size: .75rem; color: var(--gray); line-height: 1.55; }
+    .process-arr { display: flex; align-items: center; color: var(--green); font-size: 1.1rem; opacity: .6; }
+
+    /* Output cards */
+    .output-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .output-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem;
+      border-top: 2px solid var(--green);
+    }
+    .output-num { font-size: 1.6rem; font-weight: 800; color: var(--green); font-family: 'JetBrains Mono', monospace; margin-bottom: .4rem; }
+    .output-card h5 { font-size: .85rem; font-weight: 700; color: var(--white); margin-bottom: .4rem; }
+    .output-card p  { font-size: .79rem; color: var(--gray); line-height: 1.6; }
+
+    /* ── Dashboard Showcase ── */
+    .dash-showcase { margin-top: .25rem; }
+    .dash-disclaimer { font-size: .7rem; color: var(--gray); font-style: italic; margin-bottom: .85rem; opacity: .65; }
+    .dash-slideshow {
+      position: relative; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border); background: var(--bg);
+    }
+    .dash-slides { display: flex; transition: transform .4s cubic-bezier(.4,0,.2,1); }
+    .dash-slide { min-width: 100%; }
+    .dash-slide-title {
+      padding: .75rem 1.25rem;
+      font-size: .78rem; font-weight: 700; color: var(--green);
+      font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+      background: var(--surface2); border-bottom: 1px solid var(--border);
+    }
+    .dash-slide-title::before { content: '// '; opacity: .55; }
+    .dash-slide img { width: 100%; display: block; }
+    .dash-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(18,14,11,.75); border: 1px solid var(--border2);
+      color: var(--white); width: 34px; height: 34px;
+      border-radius: 50%; cursor: pointer; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition); z-index: 3;
+    }
+    .dash-btn:hover { border-color: var(--green); color: var(--green); background: rgba(18,14,11,.95); }
+    .dash-btn.prev { left: .75rem; }
+    .dash-btn.next { right: .75rem; }
+    .dash-dots {
+      position: absolute; bottom: .75rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: .45rem; z-index: 3;
+    }
+    .dash-dot {
+      width: 6px; height: 6px; border-radius: 3px;
+      background: rgba(255,255,255,.25); cursor: pointer;
+      transition: var(--transition);
+    }
+    .dash-dot.active { background: var(--green); width: 18px; }
+    .dash-features {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: .85rem; margin-top: 1rem;
+    }
+    .dash-feature {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem; transition: var(--transition);
+    }
+    .dash-feature:hover { border-color: var(--green-border); }
+    .dash-feat-icon { font-size: 1.1rem; display: block; margin-bottom: .5rem; }
+    .dash-feature strong { font-size: .78rem; color: var(--white); display: block; margin-bottom: .3rem; font-weight: 700; }
+    .dash-feature p { font-size: .74rem; color: var(--gray); line-height: 1.55; }
+
+    /* ── Testimonial stripe ── */
+    .testimonial-stripe {
+      background: var(--surface); padding: 5.5rem 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .testimonial-inner { text-align: center; max-width: 760px; margin: 0 auto; }
+    .quote-mark { font-size: 5rem; color: var(--green); line-height: .4; margin-bottom: 1.5rem; font-family: Georgia, serif; }
+    .testimonial-text {
+      font-size: clamp(1.15rem, 2.5vw, 1.55rem); font-weight: 600; color: var(--white);
+      font-family: 'DM Serif Display', serif; font-style: italic; line-height: 1.5; margin-bottom: 1.75rem;
+    }
+    .testimonial-attr { font-size: .85rem; color: var(--gray); }
+
+    /* ── Contact ── */
+    .contact { padding: 7rem 0; text-align: center; }
+    .contact .section-title { margin-bottom: .75rem; }
+    .contact .section-lead { margin: 0 auto 3rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--gray); font-size: .9rem; font-weight: 600;
+      padding: .9rem 1.75rem; border-radius: 999px;
+      text-decoration: none; transition: var(--transition);
+    }
+    .contact-link:hover { border-color: var(--green-border); color: var(--green); }
+    .contact-link.primary { background: var(--green); color: #120E0B; border-color: var(--green); font-weight: 700; }
+    .contact-link.primary:hover { background: var(--green-lt); border-color: var(--green-lt); transform: translateY(-2px); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 1.75rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer p { font-size: .78rem; color: var(--gray); }
+    .footer-logo {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      border-radius: 6px; font-weight: 700; font-size: .78rem;
+      color: var(--green); font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Animations ── */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .45; transform: scale(.8); }
+    }
+    @keyframes glow-pulse {
+      0%, 100% { opacity: .7; transform: scale(1); }
+      50%       { opacity: 1;  transform: scale(1.08); }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .hero-grid      { grid-template-columns: 1fr; text-align: center; }
+      .hero-right     { order: -1; }
+      .hero-desc      { margin: 0 auto 2.5rem; }
+      .hero-actions   { justify-content: center; }
+      .about-grid     { grid-template-columns: 1fr; }
+      .about-info-card { position: static; }
+      .stars-grid     { grid-template-columns: 1fr; }
+      .project-body.open { grid-template-columns: 1fr; }
+      .project-header { grid-template-columns: 1fr; }
+      .project-metrics { flex-wrap: wrap; }
+      .exp-item       { grid-template-columns: 1fr; gap: .5rem; }
+      .exp-dot        { display: none; }
+    }
+    @media (max-width: 640px) {
+      .nav-links      { display: none; }
+      .skills-grid    { grid-template-columns: 1fr; }
+      .hero-stats     { grid-template-columns: 1fr; }
+      .hero-photo-wrap, .hero-photo-frame { width: 210px; height: 210px; }
+      .project-header { padding: 1.5rem; }
+      .project-tools, .project-body { padding: 1.25rem 1.5rem; }
+      .container      { padding: 0 1.25rem; }
+      .section        { padding: 5rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">YG</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Left: text -->
+        <div class="hero-left">
+          <div class="hero-eyebrow">
+            <span class="pulse-dot"></span>
+            Open to new opportunities
+          </div>
+          <h1>
+            Yun Gu<br />
+            <em>Data Analyst</em>
+          </h1>
+          <p class="hero-desc">
+            Senior data analyst at Ogilvy with 9 years bridging business strategy and hands-on analytics — from CRM pipelines to boardroom presentations.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn-primary">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+              View my work
+            </a>
+            <a href="mailto:guyun1990@gmail.com" class="btn-outline">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Say hello
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: photo cutout + stats -->
+        <div class="hero-right">
+          <div class="hero-cutout">
+            <img src="profile2_cutout.png" alt="Yun Gu" />
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About ── -->
+  <section class="section section-alt" id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-info-card reveal">
+          <div class="about-info-row">
+            <span class="about-info-label">Current role</span>
+            <span class="about-info-value">Senior Data Analyst</span>
+            <span style="font-size:.85rem; color:var(--gray);">Ogilvy · Hong Kong</span>
+          </div>
+          <div class="about-info-row">
+            <span class="about-info-label">Experience</span>
+            <span class="about-info-value">9 years</span>
+            <span style="font-size:.85rem; color:var(--gray);">Ogilvy · We Are Social · DDB</span>
+          </div>
+          <div class="about-info-row">
+            <span class="about-info-label">Languages</span>
+            <span class="about-info-value">🇫🇷 French &nbsp;·&nbsp; 🇬🇧 English &nbsp;·&nbsp; 🇨🇳 Chinese</span>
+          </div>
+          <div class="about-info-row">
+            <span class="about-info-label">Based in</span>
+            <span class="about-info-value">🇭🇰 Hong Kong</span>
+          </div>
+          <div class="about-info-row">
+            <span class="about-info-label">Focus</span>
+            <span class="about-info-value">Data Analytics · CRM · AI</span>
+          </div>
+          <div class="about-info-row">
+            <span class="about-info-label">Contact</span>
+            <span class="about-info-value" style="font-size:.88rem;">guyun1990@gmail.com</span>
+          </div>
+        </div>
+
+        <div class="about-content reveal">
+          <div class="section-label">About me</div>
+          <h2 class="section-title">Business-first analyst.<br/>Self-taught engineer.</h2>
+          <p>Hi, I'm Yun — a senior data analyst at Ogilvy. I love working with data, <strong>reading between numbers, finding insights and translating them into business strategies.</strong></p>
+          <p>Starting my career as a strategist at an advertising agency, my biggest strength is <strong>understanding what a business truly needs</strong> — and using data to solve it.</p>
+          <p>I also love technical challenges. I taught myself to code on the job, picking up new skills as projects demanded them. That combination of business acumen and hands-on technical ability means I can work across the whole problem — from the data pipeline to the boardroom presentation.</p>
+          <p>If you're looking for someone who's curious, self-driven, and genuinely enjoys the work — let's talk : )</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Skills ── -->
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">What I do</div>
+        <h2 class="section-title">Key skill set</h2>
+        <p class="section-lead">Four core capabilities that let me move from raw data all the way to strategic outcomes.</p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-icon">📊</div>
+          <h3>Data Analytics &amp; Storytelling</h3>
+          <p>Combine business acumen and analytical thinking to find opportunities for growth — and make them land with any audience.</p>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🖥️</div>
+          <h3>Dashboard Building</h3>
+          <p>Build dashboards with clear business logic, user-friendly modern designs, and optimized loading speed using star schema architecture.</p>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">⚙️</div>
+          <h3>Data Engineering</h3>
+          <p>Oversee CRM pipelines handling 10,000+ daily transaction records. Migrate and monitor pipelines in Azure Data Factory.</p>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">📢</div>
+          <h3>Media Campaign Analytics</h3>
+          <p>Deliver campaign performance and social listening reports that directly inform media strategy and budget decisions.</p>
+        </div>
+      </div>
+
+      <div class="tech-row reveal" style="margin-top:3.5rem;">
+        <span class="section-label" style="margin:0; align-self:center;">Tech stack</span>
+        <span class="tech-pill">Tableau</span>
+        <span class="tech-pill">SQL</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Azure Data Factory</span>
+        <span class="tech-pill light">Gemini AI</span>
+        <span class="tech-pill light">Star Schema</span>
+        <span class="tech-pill light">Git</span>
+
+
+        <span class="tech-pill light">Confluence</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Experience ── -->
+  <section class="section section-alt" id="experience">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Career</div>
+        <h2 class="section-title">Working experience</h2>
+      </div>
+
+      <div class="exp-list">
+
+        <div class="exp-item reveal">
+          <div>
+            <div class="exp-period">Mar 2020 – Present</div>
+            <div class="exp-period-dur">6 years</div>
+          </div>
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-company">Ogilvy</div>
+            <div class="exp-role">Senior Data Analyst · Hong Kong</div>
+            <div class="exp-desc">Full ownership of Tableau dashboard suites, CRM pipeline engineering, customer segmentation using machine learning and AI, strategic workshop facilitation for APAC marketing executives.</div>
+          </div>
+        </div>
+
+        <div class="exp-item reveal">
+          <div>
+            <div class="exp-period">May 2017 – Feb 2020</div>
+            <div class="exp-period-dur">3 years</div>
+          </div>
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-company">We Are Social</div>
+            <div class="exp-role">Data Analyst · France</div>
+            <div class="exp-desc">Social and campaign analytics, data-driven media strategy recommendations, social listening reporting for global brand clients.</div>
+          </div>
+        </div>
+
+        <div class="exp-item reveal">
+          <div>
+            <div class="exp-period">Nov 2015 – Feb 2017</div>
+            <div class="exp-period-dur">1 year</div>
+          </div>
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-company">DDB</div>
+            <div class="exp-role">Strategic Planner · France</div>
+            <div class="exp-desc">Brand strategy and consumer insight work at a global creative agency — the foundation for a business-first approach to data.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Northern Stars ── -->
+  <section class="section" id="values">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">How I think</div>
+        <h2 class="section-title">My northern stars</h2>
+        <p class="section-lead">Three principles that guide every analysis I do.</p>
+      </div>
+
+      <div class="stars-grid">
+        <div class="star-card reveal">
+          <div class="star-num">01</div>
+          <h3>Business-first</h3>
+          <p>I always start with the "so what" — what does the business actually need? Before I open any tool, I sit down with my client and get clear on what we're trying to move. The numbers come second. The business question always comes first.</p>
+        </div>
+        <div class="star-card reveal">
+          <div class="star-num">02</div>
+          <h3>Engage with data storytelling</h3>
+          <p>Data doesn't speak for itself — someone has to translate it. Whether it's a dashboard, a written report, or a live presentation, I'm always thinking about how to make the insight land. If people walk away confused, the analysis didn't work.</p>
+        </div>
+        <div class="star-card reveal">
+          <div class="star-num">03</div>
+          <h3>Proactive beats Reactive</h3>
+          <p>I don't just execute briefs — I think about them. Some of my best findings were never in the original scope. I spotted something interesting, followed it, and it turned into something useful. Curiosity is what separates good analysis from great analysis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Projects ── -->
+  <section class="section section-alt" id="projects">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Case studies</div>
+        <h2 class="section-title">Key projects</h2>
+        <p class="section-lead">Three projects that show how I move from problem to pipeline to strategy.</p>
+      </div>
+
+      <div class="projects-list">
+
+        <!-- Project 1: Dashboard -->
+        <div class="project-card reveal">
+          <div class="project-header" onclick="toggleProject(this)">
+            <div>
+              <div class="project-tag">🏪 Dashboard Engineering</div>
+              <div class="project-title">Dashboard Design &amp; Maintenance</div>
+              <div class="project-subtitle">UX design and loading performance optimization</div>
+            </div>
+            <div style="display:flex; flex-direction:row; align-items:center; gap:2.5rem; flex-shrink:0;">
+              <div class="project-metrics">
+                <div class="metric">
+                  <div class="metric-num">34</div>
+                  <div class="metric-label">dashboards maintained</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-num">2–3×</div>
+                  <div class="metric-label">faster load times</div>
+                </div>
+              </div>
+              <button class="toggle-btn" aria-label="Expand project">
+                Read more
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="project-tools">
+            <span class="tool-badge">Tableau</span>
+            <span class="tool-badge">Azure Data Factory</span>
+            <span class="tool-badge">Star Schema</span>
+            <span class="tool-badge">SQL</span>
+          </div>
+          <div class="project-body">
+            <!-- ▸ Replace "dashboard.png" below with your actual dashboard screenshot filename
+            <div class="project-img-placeholder" id="dashPlaceholder">
+              <span>📊</span>
+              <div>Drop your dashboard screenshot into the <code>portfolio html</code> folder<br/>then update this line: <code>src="dashboard.png"</code></div>
+            </div>
+             -->
+            <!-- 3-column Challenges → Solutions (page 7 layout) -->
+            <div class="cs-grid" style="grid-column: 1 / -1;">
+
+              <!-- Column 1 -->
+              <div class="cs-col">
+                <div class="problem-card">
+                  <div class="prob-icon">📖</div>
+                  <h5>Hard to read</h5>
+                  <p>Heavy data tables made it difficult for non-technical users to extract insight. No visual hierarchy, no comparison context, no way to tell what was good or bad.</p>
+                </div>
+                <div class="cs-arrow">↓</div>
+                <div class="solution-card">
+                  <div class="solution-title">UX Design: From data dumps to dashboards people actually use</div>
+                  <ul class="solution-items">
+                    <li><strong>Charts instead of tables</strong> — bar charts, trend lines, and visual indicators. The story is readable at a glance.</li>
+                    <li><strong>Benchmark comparisons everywhere</strong> — every KPI shows YoY, vs. target, or vs. previous period.</li>
+                    <li><strong>Hover tooltips for depth</strong> — definitions and breakdowns on demand without cluttering the main view.</li>
+                    <li><strong>Consistent visual language</strong> — standardised colors, layout, and fonts across all 34 dashboards.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Column 2 -->
+              <div class="cs-col">
+                <div class="problem-card">
+                  <div class="prob-icon">⏳</div>
+                  <h5>Too slow</h5>
+                  <p>The flat data model forced Tableau to process millions of rows at query time. Load times were slow and inconsistent — frustrating every Monday morning.</p>
+                </div>
+                <div class="cs-arrow">↓</div>
+                <div class="solution-card">
+                  <div class="solution-title">Star Schema: Ingest only relevant data into Tableau</div>
+                  <ul class="solution-items">
+                    <li>Central fact table surrounded by clean dimension tables.</li>
+                    <li>Tableau queries only relevant data — faster loads despite joins.</li>
+                    <li>New metrics slot cleanly into the existing model.</li>
+                    <li>Easier to maintain and extend over time.</li>
+                  </ul>
+                  <div class="result-badge">✓ 2–3× faster load times</div>
+                </div>
+              </div>
+
+              <!-- Column 3 -->
+              <div class="cs-col">
+                <div class="problem-card">
+                  <div class="prob-icon">👻</div>
+                  <h5>Invisible pipelines</h5>
+                  <p>Stored procedures ran on a virtual machine with no monitoring. Failures were only discovered when someone opened an empty dashboard — often mid-meeting.</p>
+                </div>
+                <div class="cs-arrow">↓</div>
+                <div class="solution-card">
+                  <div class="solution-title">ADF Migration: Making the pipeline visible — and reliable</div>
+                  <ul class="solution-items">
+                    <li>Real-time monitoring: see which pipelines ran, when, and whether they succeeded.</li>
+                    <li>Instant failure alerts — before anyone opens a dashboard.</li>
+                    <li>Structured, searchable error logs. What took hours now takes minutes.</li>
+                  </ul>
+                  <div class="result-badge">✓ Significantly reduced debugging time</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Dashboard showcase -->
+            <div class="dash-showcase" style="grid-column: 1 / -1;">
+              <p class="dash-disclaimer">* Dashboard demo based on fictional data. Brand-related content is hidden.</p>
+
+              <!-- Slideshow -->
+              <div class="dash-slideshow">
+                <div class="dash-slides" id="dashSlides">
+                  <div class="dash-slide">
+                    <div class="dash-slide-title">RFM Segment Overview — definition and key metrics</div>
+                    <img src="Dashboard1.png" alt="RFM Segment Overview" />
+                  </div>
+                  <div class="dash-slide">
+                    <div class="dash-slide-title">Dynamic KPI Table — drill down by segment, gender, age, associated store</div>
+                    <img src="Dashboard2.png" alt="Dynamic KPI Table" />
+                  </div>
+                </div>
+                <button class="dash-btn prev" onclick="slideDash(-1)">&#8249;</button>
+                <button class="dash-btn next" onclick="slideDash(1)">&#8250;</button>
+                <div class="dash-dots">
+                  <span class="dash-dot active" onclick="goSlide(0)"></span>
+                  <span class="dash-dot" onclick="goSlide(1)"></span>
+                </div>
+              </div>
+
+              <!-- Feature highlights from PDF p.8 -->
+              <div class="dash-features">
+                <div class="dash-feature">
+                  <span class="dash-feat-icon">🎯</span>
+                  <strong>Dynamic customer selection</strong>
+                  <p>Choose one RFM segment to focus on, or mix multiple segments for comparison.</p>
+                </div>
+                <div class="dash-feature">
+                  <span class="dash-feat-icon">📊</span>
+                  <strong>No number-heavy tables</strong>
+                  <p>Everything visualized so the story is readable at a glance.</p>
+                </div>
+                <div class="dash-feature">
+                  <span class="dash-feat-icon">⚖️</span>
+                  <strong>Metrics comparison</strong>
+                  <p>Every segment benchmarked against the full customer average for instant context.</p>
+                </div>
+                <div class="dash-feature">
+                  <span class="dash-feat-icon">🔍</span>
+                  <strong>Flexible breakdowns</strong>
+                  <p>KPI table sliceable by RFM group, join date, gender, and more.</p>
+                </div>
+                <div class="dash-feature">
+                  <span class="dash-feat-icon">💡</span>
+                  <strong>Show definitions</strong>
+                  <p>Segment definitions shown in context — users always know who they're looking at.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: CRM -->
+        <div class="project-card reveal">
+          <div class="project-header" onclick="toggleProject(this)">
+            <div>
+              <div class="project-tag">📋 CRM Strategy</div>
+              <div class="project-title">CRM Insights Report Transformation</div>
+              <div class="project-subtitle">From metric dumps to customer stories</div>
+            </div>
+            <div style="display:flex; flex-direction:row; align-items:center; gap:2.5rem; flex-shrink:0;">
+              <div class="project-metrics">
+                <div class="metric">
+                  <div class="metric-num">30+</div>
+                  <div class="metric-label">marketing execs in workshop</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-num">8</div>
+                  <div class="metric-label">APAC markets analyzed</div>
+                </div>
+              </div>
+              <button class="toggle-btn" aria-label="Expand project">
+                Read more
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="project-tools">
+            <span class="tool-badge">Tableau</span>
+            <span class="tool-badge">SQL</span>
+            <span class="tool-badge">Customer Journey Analysis</span>
+
+            <span class="tool-badge">Workshop facilitation</span>
+          </div>
+          <div class="project-body">
+
+            <!-- Old vs New transformation — full width -->
+            <div style="grid-column: 1 / -1;">
+
+              <div class="crm-transform">
+                <!-- OLD -->
+                <div class="crm-panel old">
+                  <div class="crm-panel-label">Old report</div>
+                  <p class="crm-panel-desc">High-level KPI figures. Templated. Delivered quarterly.</p>
+                  <div class="kpi-table">
+                    <div class="kpi-row"><span class="kpi-name">Avg. shopping interval</span><span class="kpi-value">~X days*</span></div>
+                    <div class="kpi-row"><span class="kpi-name">Units per transaction (UPT)</span><span class="kpi-value">x.x*</span></div>
+                    <div class="kpi-row"><span class="kpi-name">Avg. unit retail (AUR)</span><span class="kpi-value">$xxx*</span></div>
+                    <div class="kpi-row"><span class="kpi-name">Gender breakdown (F/M)</span><span class="kpi-value">xx% / xx%*</span></div>
+                    <div class="kpi-row"><span class="kpi-name">Repeat rate</span><span class="kpi-value">xx%*</span></div>
+                  </div>
+                  <p class="kpi-sowhat">So what? What do we actually do with this?</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="crm-arrow">→</div>
+
+                <!-- NEW -->
+                <div class="crm-panel new">
+                  <div class="crm-panel-label">New approach</div>
+                  <p class="crm-panel-desc">Focused deep-dives designed to paint a picture of the customer — not just report the numbers.</p>
+                  <div class="story-card">
+                    <p>Your customers come back within a few months on average — but it's a long-tail curve. A significant portion return over a year later for annual replenishment.</p>
+                  </div>
+                  <div class="story-card">
+                    <p>Customers come in to buy the signature collection, mostly purchasing 2–3 pieces. The majority keep buying the same collection on their next visit.</p>
+                  </div>
+                  <div class="story-card">
+                    <p>Male customers tend to stick to the same fit, while female customers are more likely to follow trends.</p>
+                  </div>
+                  <div class="story-card">
+                    <p>Certain markets show notably higher repeat rates among older segments — pointing to distinct loyalty patterns by region.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom: quote + workshop photo -->
+              <div class="crm-bottom">
+                <div class="crm-bottom-quote">
+                  <div class="highlight-box">
+                    <p class="quote">"This is the best CRM report I have ever seen."</p>
+                    <p class="attr">— Marketing VP, Global Fashion Retailer APAC</p>
+                  </div>
+                  <ul class="outcome-list">
+                    <li>Followed each customer's journey across up to 5 consecutive baskets.</li>
+                    <li>Sliced by gender, age, and market to surface actionable segment differences.</li>
+                    <li>Reframed every data table as an ideation prompt for marketing teams.</li>
+                    <li>Client redesigned their CRM journey based directly on the basket-sequence findings.</li>
+                  </ul>
+                </div>
+                <div class="workshop-thumb">
+                  <img src="workshop.png" alt="Workshop photo" />
+                  <div class="workshop-caption">30+ APAC marketing execs · 8 markets</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: AI -->
+        <div class="project-card reveal">
+          <div class="project-header" onclick="toggleProject(this)">
+            <div>
+              <div class="project-tag">🤖 AI &amp; Segmentation</div>
+              <div class="project-title">AI-Powered Product Tagging &amp; CRM Segmentation</div>
+              <div class="project-subtitle">Teaching AI to read products like a stylist</div>
+            </div>
+            <div style="display:flex; flex-direction:row; align-items:center; gap:2.5rem; flex-shrink:0;">
+              <div class="project-metrics">
+                <div class="metric">
+                  <div class="metric-num">99%</div>
+                  <div class="metric-label">customers matched to segments</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-num">60+</div>
+                  <div class="metric-label">execs in workshop</div>
+                </div>
+              </div>
+              <button class="toggle-btn" aria-label="Expand project">
+                Read more
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="project-tools">
+            <span class="tool-badge">AI (Gemini)</span>
+            <span class="tool-badge">Python</span>
+            <span class="tool-badge">SQL</span>
+            <span class="tool-badge">Customer Segmentation</span>
+            <span class="tool-badge">Workshop facilitation</span>
+          </div>
+          <div class="project-body">
+            <div style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 2rem;">
+
+              <!-- Section 1: The Gap -->
+              <div>
+                <div class="ai-section-label">The challenge — segments on paper, a critical gap in reality</div>
+                <div class="seg-gap">
+
+                  <!-- Segments needed -->
+                  <div class="seg-panel">
+                    <div class="seg-panel-title">What the segments required</div>
+                    <div class="seg-tags">
+                      <span class="seg-tag">Logo Lover</span>
+                      <span class="seg-tag">Quiet Luxe</span>
+                      <span class="seg-tag">Trendy Explorer</span>
+                      <span class="seg-tag">Classic Casual</span>
+                      <span class="seg-tag">Occasion Dresser</span>
+                    </div>
+                    <div class="data-row"><span class="data-check">✗</span><span class="data-name">Product style tags</span></div>
+                    <div class="data-row"><span class="data-check">✗</span><span class="data-name">Logo prominence</span></div>
+                    <div class="data-row"><span class="data-check">✗</span><span class="data-name">Occasion / formality</span></div>
+                    <div class="data-row"><span class="data-check">✗</span><span class="data-name">Silhouette trend</span></div>
+                    <p class="seg-note" style="margin-top:.75rem;">*Fictional segments for illustration purposes</p>
+                  </div>
+
+                  <!-- Gap warning -->
+                  <div class="seg-gap-center">
+                    <div class="seg-gap-icon">⚠️</div>
+                    <div class="seg-gap-text">Gap:<br/>No product<br/>style data</div>
+                  </div>
+
+                  <!-- What CRM had -->
+                  <div class="seg-panel">
+                    <div class="seg-panel-title">What our CRM had</div>
+                    <div class="data-row"><span class="data-check">✓</span><span class="data-name has">Age &amp; gender</span></div>
+                    <div class="data-row"><span class="data-check">✓</span><span class="data-name has">Spend &amp; frequency</span></div>
+                    <div class="data-row"><span class="data-check">✓</span><span class="data-name has">Purchase history</span></div>
+                    <div class="data-row"><span class="data-check" style="color:#f87171;">✗</span><span class="data-name">Product style tags</span></div>
+                    <div class="data-row"><span class="data-check" style="color:#f87171;">✗</span><span class="data-name">Occasion / formality</span></div>
+                    <div class="data-row"><span class="data-check" style="color:#f87171;">✗</span><span class="data-name">Logo affinity</span></div>
+                    <p class="seg-note" style="margin-top:.75rem;">We knew who they were. We didn't know what style they bought.</p>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Section 2: 4-step solution -->
+              <div>
+                <div class="ai-section-label">The solution — teaching AI to read a product like a stylist</div>
+                <div class="process-flow">
+                  <div class="process-step">
+                    <div class="process-num">01</div>
+                    <div class="process-icon">🛍️</div>
+                    <h5>Download product data</h5>
+                    <p>Pull product images &amp; descriptions from the brand's e-commerce platform for the entire catalogue.</p>
+                  </div>
+                  <div class="process-arr">→</div>
+                  <div class="process-step">
+                    <div class="process-num">02</div>
+                    <div class="process-icon">🤖</div>
+                    <h5>Train Gemini</h5>
+                    <p>Prompt-engineer Gemini to recognise style dimensions: logo prominence, occasion, silhouette trend, material premium.</p>
+                  </div>
+                  <div class="process-arr">→</div>
+                  <div class="process-step">
+                    <div class="process-num">03</div>
+                    <div class="process-icon">🏷️</div>
+                    <h5>Tag at scale</h5>
+                    <p>Run the full product master through Gemini. Every SKU receives structured style tags — automatically.</p>
+                  </div>
+                  <div class="process-arr">→</div>
+                  <div class="process-step">
+                    <div class="process-num">04</div>
+                    <div class="process-icon">👤</div>
+                    <h5>Score customers</h5>
+                    <p>Map each customer's purchase history to tagged SKUs. Build a style scorecard. Match to segments.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section 3: Outcomes -->
+              <div>
+                <div class="ai-section-label">The output — segments live, strategy built</div>
+                <div class="output-grid">
+                  <div class="output-card">
+                    <div class="output-num">99%</div>
+                    <h5>Full customer base classified</h5>
+                    <p>Every customer scored against style dimensions and matched to a segment — using real purchase history, not surveys.</p>
+                  </div>
+                  <div class="output-card">
+                    <div class="output-num">60+</div>
+                    <h5>Execs, one workshop</h5>
+                    <p>Full-day strategy session across all 8 APAC markets. For the first time teams could say: "our market is 35% Logo Lovers — here's how to reach them."</p>
+                  </div>
+                  <div class="output-card">
+                    <div class="output-num">∞</div>
+                    <h5>Permanent pipeline asset</h5>
+                    <p>The tagging pipeline became an internal asset. Any new SKU added to the catalogue is now classified automatically.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Testimonial ── -->
+  <div class="testimonial-stripe">
+    <div class="container">
+      <div class="testimonial-inner reveal">
+        <div class="quote-mark">"</div>
+        <p class="testimonial-text">This is the best CRM report I have ever seen.</p>
+        <p class="testimonial-attr">— Marketing VP, Global Fashion Retailer APAC</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Contact ── -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label" style="display:block; text-align:center;">Get in touch</div>
+        <h2 class="section-title">Let's talk</h2>
+        <p class="section-lead">Looking for someone who's curious, self-driven, and genuinely enjoys the work? I'd love to hear from you.</p>
+        <div class="contact-links">
+          <a href="mailto:guyun1990@gmail.com" class="contact-link primary">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            guyun1990@gmail.com
+          </a>
+          <a href="tel:+85257283654" class="contact-link">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            +852 5728 3654
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-logo">YG</div>
+    <p>© 2026 Yun Gu · Data Analytics Portfolio</p>
+    <p>Built with HTML &amp; CSS</p>
+  </footer>
+
+  <script>
+    // Nav shadow on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i % 4) * 0.07 + 's';
+      observer.observe(el);
+    });
+
+    // Project accordion
+    function toggleProject(header) {
+      const card  = header.closest('.project-card');
+      const body  = card.querySelector('.project-body');
+      const btn   = header.querySelector('.toggle-btn');
+      const isOpen = body.classList.contains('open');
+
+      document.querySelectorAll('.project-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.toggle-btn').forEach(b => {
+        b.classList.remove('open');
+        b.childNodes[0].textContent = 'Read more ';
+      });
+
+      if (!isOpen) {
+        body.classList.add('open');
+        btn.classList.add('open');
+        btn.childNodes[0].textContent = 'Close ';
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+    // Dashboard slideshow
+    let dashCurrent = 0;
+    function slideDash(dir) {
+      const slides = document.getElementById('dashSlides');
+      const dots   = document.querySelectorAll('.dash-dot');
+      dashCurrent  = (dashCurrent + dir + 2) % 2;
+      slides.style.transform = `translateX(-${dashCurrent * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === dashCurrent));
+    }
+    function goSlide(i) { dashCurrent = i - 1; slideDash(1); }
+  </script>
+</body>
+</html>
